@@ -4,11 +4,22 @@
 目前有
 linkai积分签到
 linkai总积分查看
+配合定时任务timetask 运行  完美!!!
 翻译   // 逆向破解有道翻译接口   翻译+要翻译的内容 + 是连接起来不是添加+这个符号
        // 需要安装 pip install fake-useragent、  pycryptodome
+每日一言
+
+gnomic ai api破解直接调用api 供机器人使用
+gpt40
+绘画咒语
+中药大师
+起名大师
+解名大师
 
 
-配合定时任务timetask 运行  完美!!!
+gpt35 也是破解的某网站 可免费使用
+
+
 ```
 
 ```
@@ -23,9 +34,14 @@ cp config.example.json config.json
 修改 config.json 文件
 填入 帐号密码
 
+
 {
-  "linkai_user": "xxxxxxxxxxxxxx",
-  "linkai_pwd": "xxxxxxxxxx"
+    "linkai_user": "xxx",    linkai 帐号
+    "linkai_pwd": "xxx",     linkai 密码
+    "gpt40_authorization": "Bearer xxx",   gnomic 网站的 token   可使用机器人 触发登录短信 ==操作自动设置
+    "gpt40_abc12": "fbb1681d275c91435bd758ee85719880",   gnomic 网站的浏览器指纹   固定
+    "gpt40_website_key": "huizhihuyu201707",             gnomic 网站的 key         固定
+    "gpt40_phone": "xxx"                                 gnomic 网站的 手机号
 }
 
 ```
@@ -71,4 +87,26 @@ input->
 output->
     linkai积分
     linkai总积分:10405
+
+
+gnomic 网站登录
+bot 触发验证码发送
+[DEBUG][2024-02-01 14:50:22][plugin_manager.py:187] - Plugin BANWORDS triggered by event Event.ON_DECORATE_REPLY
+[DEBUG][2024-02-01 14:50:22][chat_channel.py:280] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] 触发验证码发送
+成功
+
+
+bot 验证码上传865830
+[INFO][2024-02-01 14:50:55][Xinuo.py:531] - gnomic 登录: sms_code 865830
+[INFO][2024-02-01 14:50:55][Xinuo.py:533] - gnomic 登录: url https://gnomic.cn/api/auth/oauth2/token?mobile=APP-SMS@18092668214&grant_type=mobile&code=865830&scope=server
+[INFO][2024-02-01 14:50:55][Xinuo.py:566] - gnomic 登录: response {"sub":"xxxx","iss":"https://www.baidu.com","active":true,"token_type":"Bearer","client_id":"app","access_token":"xxxx","refresh_token":"xxx","aud":["app"],"nbf":171110255.794000000,"scope":["server"],"id":111,"exp":1702229855.794000000,"expires_in":09600,"iat":1706770255.794000000,"jti":"xxx","username":"xxx"}
+[INFO][2024-02-01 14:50:55][Xinuo.py:571] - gnomic 登录: 获取access_token 成功
+[INFO][2024-02-01 14:50:55][Xinuo.py:449] - 修改配置文件: key gpt40_authorization, value: Bearer xxxxx
+[DEBUG][2024-02-01 14:50:55][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
+[DEBUG][2024-02-01 14:50:55][chat_channel.py:170] - [WX] ready to decorate reply: Reply(type=TEXT, content=验证码上传
+gnomic 登录: 成功)
+[DEBUG][2024-02-01 14:50:55][plugin_manager.py:187] - Plugin BANWORDS triggered by event Event.ON_DECORATE_REPLY
+[DEBUG][2024-02-01 14:50:55][chat_channel.py:280] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] 验证码上传
+gnomic 登录: 成功
+
 ```

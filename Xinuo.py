@@ -447,7 +447,7 @@ class Xinuo(Plugin):
         data[key] = value
         with open(config_path, 'w') as file:
             json.dump(data, file, indent=4)
-        logger.error(f"修改配置文件: key {key}, value: {value}")
+        logger.info(f"修改配置文件: key {key}, value: {value}")
 
 
     ###### gnomic PGT-4.0 #####
