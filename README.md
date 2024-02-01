@@ -109,4 +109,31 @@ gnomic 登录: 成功)
 [DEBUG][2024-02-01 14:50:55][chat_channel.py:280] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] 验证码上传
 gnomic 登录: 成功
 
+
+bot gpt40你是什么模型
+
+[DEBUG][2024-02-01 15:02:38][Xinuo.py:77] - [xinuo] on_handle_context. content: gpt40你是什么模型
+[INFO][2024-02-01 15:02:38][Xinuo.py:154] - GPT-4.0: 你是什么模型
+[INFO][2024-02-01 15:02:39][Xinuo.py:711] - GPT-4.0: 创建任务成功
+[ERROR][2024-02-01 15:02:44][Xinuo.py:701] - GPT-4.0获取结果: 服务器内部错误 can only concatenate str (not "NoneType") to str
+[INFO][2024-02-01 15:02:44][Xinuo.py:715] - GPT-4.0: 获取结果成功
+[DEBUG][2024-02-01 15:02:44][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
+[DEBUG][2024-02-01 15:02:44][chat_channel.py:170] - [WX] ready to decorate reply: Reply(type=TEXT, content=GPT-4.0
+我是基于OpenAI的GPT-4版本模型。)
+[DEBUG][2024-02-01 15:02:44][plugin_manager.py:187] - Plugin BANWORDS triggered by event Event.ON_DECORATE_REPLY
+[DEBUG][2024-02-01 15:02:44][chat_channel.py:280] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] GPT-4.0
+我是基于OpenAI的GPT-4版本模型。 
+
+bot gpt35你是什么模型
+
+[DEBUG][2024-02-01 15:03:27][Xinuo.py:77] - [xinuo] on_handle_context. content: gpt35你是什么模型
+[INFO][2024-02-01 15:03:27][Xinuo.py:122] - GPT-3.5: 你是什么模型
+[DEBUG][2024-02-01 15:03:33][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
+[DEBUG][2024-02-01 15:03:33][chat_channel.py:170] - [WX] ready to decorate reply: Reply(type=TEXT, content=GPT-3.5
+我是一个基于OpenAI GPT-3.5模型的AI机器人，使用自然语言处理技术和深度学习算法来生成答案。我的训练数据来自于互联网上的大量文本，并经过了机器学习算法的学习和优化，可以根据用户的提问和输入进行智能回复。虽然我可以生成一些令人印象深刻的答案，但我仍然有很多限制，需要不断学习和改进。)
+[DEBUG][2024-02-01 15:03:33][plugin_manager.py:187] - Plugin BANWORDS triggered by event Event.ON_DECORATE_REPLY
+[DEBUG][2024-02-01 15:03:33][chat_channel.py:280] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] GPT-3.5
+我是一个基于OpenAI GPT-3.5模型的AI机器人，使用自然语言处理技术和深度学习算法来生成答案。我的训练数据来自于互联网上的大量文本，并经过了机器学习算法的学习和优化，可以根据用户的提问和输入进行智能回复。虽然我可以生成一些令人印象深刻的答案，但我仍然有很多限制，需要不断学习和改进
+-----------------------------------
+
 ```
