@@ -99,7 +99,7 @@ bot 触发验证码发送
 
 bot 验证码上传865830
 [INFO][2024-02-01 14:50:55][Xinuo.py:531] - gnomic 登录: sms_code 865830
-[INFO][2024-02-01 14:50:55][Xinuo.py:533] - gnomic 登录: url https://gnomic.cn/api/auth/oauth2/token?mobile=APP-SMS@18092668214&grant_type=mobile&code=865830&scope=server
+[INFO][2024-02-01 14:50:55][Xinuo.py:533] - gnomic 登录: url https://gnomic.cn/api/auth/oauth2/token?mobile=APP-SMS@xxxxx&grant_type=mobile&code=865830&scope=server
 [INFO][2024-02-01 14:50:55][Xinuo.py:566] - gnomic 登录: response {"sub":"xxxx","iss":"https://www.baidu.com","active":true,"token_type":"Bearer","client_id":"app","access_token":"xxxx","refresh_token":"xxx","aud":["app"],"nbf":171110255.794000000,"scope":["server"],"id":111,"exp":1702229855.794000000,"expires_in":09600,"iat":1706770255.794000000,"jti":"xxx","username":"xxx"}
 [INFO][2024-02-01 14:50:55][Xinuo.py:571] - gnomic 登录: 获取access_token 成功
 [INFO][2024-02-01 14:50:55][Xinuo.py:449] - 修改配置文件: key gpt40_authorization, value: Bearer xxxxx
