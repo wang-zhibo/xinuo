@@ -629,7 +629,7 @@ class Xinuo(Plugin):
               'timestamp': timestamp,
               'keyid': keyid,
               'tenant-id': '1',
-              'passid':passid ,
+              'passid': passid,
               'origin': 'https://gnomic.cn',
               'sec-fetch-site': 'same-origin',
               'sec-fetch-mode': 'cors',
