@@ -87,8 +87,10 @@ class Xinuo(Plugin):
             ContextType.TEXT
         ]:
             return
-        content = e_context["context"].content.strip()
-        logger.debug("[xinuo] on_handle_context. content: %s" % content)
+        context = e_context['context']
+        content = context.content.strip()
+        session_id = context["session_id"]
+        logger.debug(f"[xinuo] on_handle_context. session_id: {session_id}, content: {content}")
         if content.lower() == "linkai签到":
             msg = self.linkai_sign_in()
             content = "linkai签到\n"
