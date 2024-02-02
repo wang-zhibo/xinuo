@@ -57,18 +57,21 @@ class Xinuo(Plugin):
 
     def __init__(self):
         super().__init__()
+        tag = "xinuo 初始化"
         self.handlers[Event.ON_HANDLE_CONTEXT] = self.on_handle_context
         try:
             self.conf = super().load_config()
             self.linkai_user = self.conf["linkai_user"]
             self.linkai_pwd = self.conf["linkai_pwd"]
-            self.linkai_authorization = ""
+            self.linkai_authorization = self.conf["linkai_authorization"]
             self.gpt40_authorization = self.conf["gpt40_authorization"]
             self.gpt40_abc12 = self.conf["gpt40_abc12"]
             self.gpt40_website_key = self.conf["gpt40_website_key"]
             self.gpt40_phone = self.conf["gpt40_phone"]
             print("[Xinuo] inited")
-        except:
+        except Exception as e:
+            log_msg = f"{tag}: error: {e}"
+            logger.error(log_msg)
             raise self.handle_error(e, "[Xinuo] init failed, ignore ")
 
 
@@ -811,6 +814,8 @@ class Xinuo(Plugin):
                     if token:
                         log_msg = f"{tag}成功token: {token}"
                         self.linkai_authorization = f"Bearer {token}"
+                        key = "linkai_authorization"
+                        self.edit_config_json(key, self.linkai_authorization)
                         logger.info(log_msg)
                 else:
                     message = res_json.get("message")
