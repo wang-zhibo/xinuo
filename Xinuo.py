@@ -77,8 +77,14 @@ class Xinuo(Plugin):
             raise self.handle_error(e, "[Xinuo] init failed, ignore ")
 
 
+    def handle_error(self, error, message):
+        logger.error(f"{message}，错误信息：{error}")
+        return message
+
+
     def on_handle_context(self, e_context: EventContext):
         content = e_context["context"].content.strip()
+        session_id = context["session_id"]
         logger.debug("[xinuo] on_handle_context. content: %s" % content)
         if content.lower() == "linkai签到":
             msg = self.linkai_sign_in()
