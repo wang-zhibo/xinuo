@@ -4,34 +4,36 @@
 # Author : zhibo.wang
 # E-mail : gm.zhibo.wang@gmail.com
 # Date   :
-# Desc   : pip install pyexecjs
+# Desc   :
 
 
-import os
-import re
-import json
-import time
-import execjs
-import base64
-import random
-import hashlib
-import plugins
-import datetime
-import requests
-from Crypto.Cipher import AES
-from fake_useragent import UserAgent
-from bridge.reply import Reply, ReplyType
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.backends import default_backend
-import base64
+try:
+    from plugins import *
+    import os
+    import re
+    import json
+    import time
+    import execjs
+    import base64
+    import random
+    import hashlib
+    import plugins
+    import datetime
+    import requests
+    from Crypto.Cipher import AES
+    from fake_useragent import UserAgent
+    from bridge.reply import Reply, ReplyType
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    from cryptography.hazmat.backends import default_backend
+    import base64
 
-from plugins import *
-
-import uuid
-import pymongo
-import hashlib
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    import uuid
+    import pymongo
+    import hashlib
+    import urllib3
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+except Exception as e:
+    logger.error(f"[Xinuo] import error: {e}")
 
 
 @plugins.register(
