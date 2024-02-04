@@ -10,6 +10,7 @@ linkai总积分查看
 每日一言
 
 gnomic ai api破解直接调用api 供机器人使用
+https://www.gnomic.cn/?216639
 gpt40
 绘画咒语
 中药大师
