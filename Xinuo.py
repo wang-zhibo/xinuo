@@ -142,7 +142,7 @@ class Xinuo(Plugin):
         elif content.lower() == "触发验证码发送":
             tag = '触发验证码发送'
             if not Util.is_admin(e_context):
-                Util.set_reply_text(f"{tag}: 需要管理员权限执行", e_context, level=ReplyType.ERROR)
+                Util.set_reply_text(f"{tag}:\n需要管理员权限执行", e_context, level=ReplyType.ERROR)
                 return
             msg = self.trigger_SMS()
             content = f"{tag}\n"
@@ -154,7 +154,7 @@ class Xinuo(Plugin):
             gpt_text = content[5:].strip()
             tag = '验证码上传'
             if not Util.is_admin(e_context):
-                Util.set_reply_text(f"{tag}: 需要管理员权限执行", e_context, level=ReplyType.ERROR)
+                Util.set_reply_text(f"{tag}:\n需要管理员权限执行", e_context, level=ReplyType.ERROR)
                 return
             msg = self.upload_SMS(gpt_text)
             content = f"{tag}\n"
