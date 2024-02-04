@@ -28,6 +28,7 @@ try:
     from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
     from cryptography.hazmat.backends import default_backend
     import base64
+    from .xinuo_utils import Util
 
     import uuid
     import pymongo
@@ -72,7 +73,7 @@ class Xinuo(Plugin):
             self.gpt40_abc12 = self.conf["gpt40_abc12"]
             self.gpt40_website_key = self.conf["gpt40_website_key"]
             self.gpt40_phone = self.conf["gpt40_phone"]
-            print("[Xinuo] inited")
+            logger.info("[Xinuo] inited")
         except Exception as e:
             log_msg = f"{tag}: error: {e}"
             logger.error(log_msg)
@@ -140,6 +141,9 @@ class Xinuo(Plugin):
         #### gnomic ####
         elif content.lower() == "触发验证码发送":
             tag = '触发验证码发送'
+            if not Util.is_admin(e_context):
+                Util.set_reply_text(f"{tag}: 需要管理员权限执行", e_context, level=ReplyType.ERROR)
+                return
             msg = self.trigger_SMS()
             content = f"{tag}\n"
             content += f"{msg}"
@@ -149,6 +153,9 @@ class Xinuo(Plugin):
         elif content[:5].lower() == "验证码上传":
             gpt_text = content[5:].strip()
             tag = '验证码上传'
+            if not Util.is_admin(e_context):
+                Util.set_reply_text(f"{tag}: 需要管理员权限执行", e_context, level=ReplyType.ERROR)
+                return
             msg = self.upload_SMS(gpt_text)
             content = f"{tag}\n"
             content += f"{msg}"
