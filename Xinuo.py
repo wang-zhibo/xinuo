@@ -724,7 +724,7 @@ class Xinuo(Plugin):
             _id = self.run_gpt40_put_prompt(gpt_text, tag, agSn)
             if _id:
                 logger.info(f"{tag}: 创建任务成功")
-                time.sleep(1)
+                time.sleep(5)
                 result = self.run_gpt40_get_data(_id, tag, agSn)
                 if result:
                     logger.info(f"{tag}: 获取结果成功")
