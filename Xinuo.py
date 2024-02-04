@@ -41,7 +41,7 @@ except Exception as e:
 
 @plugins.register(
     name="Xinuo",                         # 插件的名称
-    desire_priority=666,                  # 插件的优先级
+    desire_priority=66,                   # 插件的优先级
     hidden=False,                         # 插件是否隐藏
     desc="个人开发的一些常用工具",        # 插件的描述
     version="0.0.4",                      # 插件的版本号
