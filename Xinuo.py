@@ -1062,6 +1062,36 @@ class Xinuo(Plugin):
         except Exception as e:
             logger.error(f"{tag}: 服务器内部错误 {e}")
 
+    def fun_qanything_upload_file(self):
+        tag = "qanything 知识库上传文件"
+        msg = f"{tag}: 服务器睡着了,请稍后再试"
+        """
+        url = "https://ai.youdao.com/saas/api/q_anything/saas/upload_file"
+        payload = {'kbId': 'KB31cad7f5c4944905bab6b105a7ae409a'}
+        files=[
+          ('file',('在过去的一年里.docx',open('/home/yu/文档/WeChat Files/wxid_dtsg9sidbaw812/FileStorage/File/2024-01/在过去的一年里.docx','rb'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
+        ]
+        headers = {
+          'authority': 'ai.youdao.com',
+          'accept': '*/*',
+          'accept-language': 'zh-CN,zh;q=0.9',
+          'cookie': '',
+          'origin': 'https://ai.youdao.com',
+          'referer': 'https://ai.youdao.com/saas/qanything/',
+          'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"Linux"',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-origin',
+          'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        print(response.text)
+        {"errorCode":"0","msg":"SUCCESS","requestId":"42fc7946-1258-4b8d-b90c-fbeb1da43383","result":[{"fileId":"745c062624534b4d8aee2dd077b562b5","fileName":"在过去的一年里.docx","status":"0"}]}
+        """
+        return msg
+
     def fun_qanything_chat(self, question):
         tag = "知识库"
         msg = f"{tag}: 服务器睡着了,请稍后再试"
