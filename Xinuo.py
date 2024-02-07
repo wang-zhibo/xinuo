@@ -92,8 +92,8 @@ class Xinuo(Plugin):
         content = context.content.strip()
         session_id = context["session_id"]
         logger.debug(f"[xinuo] on_handle_context. session_id: {session_id}, content: {content}")
-        if content.lower() == "开启盲水印":
-            tag = '盲水印'
+        if content.lower() == "开启消息盲水印":
+            tag = '消息盲水印'
             if not Util.is_admin(e_context):
                 Util.set_reply_text(f"{tag}:\n需要管理员权限执行", e_context, level=ReplyType.ERROR)
                 return
@@ -104,8 +104,8 @@ class Xinuo(Plugin):
             reply = self.create_reply(ReplyType.TEXT, content)
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS
-        elif content.lower() == "关闭盲水印":
-            tag = '盲水印'
+        elif content.lower() == "关闭消息盲水印":
+            tag = '消息盲水印'
             if not Util.is_admin(e_context):
                 Util.set_reply_text(f"{tag}:\n需要管理员权限执行", e_context, level=ReplyType.ERROR)
                 return
@@ -297,8 +297,8 @@ class Xinuo(Plugin):
         help_text = "发送关键词执行对应操作\n"
         if not verbose:
             return help_text
-        help_text += "输入 '开启盲水印'， 消息文本开启添加盲水印\n"
-        help_text += "输入 '关闭盲水印'， 消息文本关闭添加盲水印\n"
+        help_text += "输入 '开启消息盲水印'， 消息文本开启添加盲水印\n"
+        help_text += "输入 '关闭消息盲水印'， 消息文本关闭添加盲水印\n"
         help_text += "输入 'linkai签到'， 进行签到\n"
         help_text += "输入 'linkai积分'， 进行总积分获取\n"
         help_text += "输入 '翻译+内容'， 进行有道翻译\n"

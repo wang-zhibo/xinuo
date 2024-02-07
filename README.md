@@ -142,9 +142,9 @@ bot gpt35你是什么模型
 -----------------------------------
 
 
-bot 开启盲水印
+bot 开启消息盲水印
 
-[DEBUG][2024-02-07 10:34:44][Xinuo.py:94] - [xinuo] on_handle_context. session_id: @7a2684574e3f76a424e1cde2c68529d98b3a7286bd0c3b6e435b125618341904, content: 开启盲水印
+[DEBUG][2024-02-07 10:34:44][Xinuo.py:94] - [xinuo] on_handle_context. session_id: @7a2684574e3f76a424e1cde2c68529d98b3a7286bd0c3b6e435b125618341904, content: 开启消息盲水印
 [INFO][2024-02-07 10:34:44][Xinuo.py:289] - 消息已经开启添加盲水印正在处理...
 [DEBUG][2024-02-07 10:34:44][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
 [DEBUG][2024-02-07 10:34:44][chat_channel.py:172] - [WX] ready to decorate reply: Reply(type=TEXT, content=盲水印:
@@ -154,9 +154,9 @@ bot 开启盲水印
  已开启
 
 
-bot 关闭盲水印
+bot 关闭消息盲水印
 
-[DEBUG][2024-02-07 10:34:51][Xinuo.py:94] - [xinuo] on_handle_context. session_id: @7a2684574e3f76a424e1cde2c68529d98b3a7286bd0c3b6e435b125618341904, content: 关闭盲水印
+[DEBUG][2024-02-07 10:34:51][Xinuo.py:94] - [xinuo] on_handle_context. session_id: @7a2684574e3f76a424e1cde2c68529d98b3a7286bd0c3b6e435b125618341904, content: 关闭消息盲水印
 [INFO][2024-02-07 10:34:51][Xinuo.py:508] - 修改配置文件: key watermark_encryption_status, value: False
 [DEBUG][2024-02-07 10:34:51][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
 [DEBUG][2024-02-07 10:34:51][chat_channel.py:172] - [WX] ready to decorate reply: Reply(type=TEXT, content=盲水印:
