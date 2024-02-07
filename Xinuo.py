@@ -254,9 +254,12 @@ class Xinuo(Plugin):
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
         """
 
-    def create_reply(self, reply_type, content):
+    def create_reply(self, reply_type, content, open_encryption=False):
         reply = Reply()
         reply.type = reply_type
+        # 是否开启 信息添加盲水印
+        if open_encryption:
+            content = Util.encryption_text(content)
         reply.content = content
         return reply
 
@@ -268,8 +271,11 @@ class Xinuo(Plugin):
         help_text += "输入 'linkai积分'， 进行总积分获取\n"
         help_text += "输入 '翻译+内容'， 进行有道翻译\n"
         help_text += "输入 '人品'， 随机获取人品分数\n"
-        help_text += "输入 'gpt35+内容'， 使用gpt35模型进行回答\n"
         help_text += "输入 '验证码识别cid'，获取验证码识别cid \n"
+        help_text += "输入 'gpt35+内容'， 使用gpt35模型进行回答\n"
+        help_text += "输入 '触发验证码发送'，触发gnomic平台验证码发送 \n"
+        help_text += "输入 '验证码上传+手机验证码'，gnomic手机验证码上传并登录 \n"
+        help_text += "输入 'gpt40+内容'， 使用gpt40模型进行回答\n"
         help_text += "输入 '每日一言'，每日一言 \n"
         help_text += "输入 '绘画咒语'，mj绘画咒语 \n"
         help_text += "输入 '中药大师'，中药大师 \n"

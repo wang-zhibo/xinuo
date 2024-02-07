@@ -3,3 +3,4 @@ pycryptodome
 pyexecjs
 pymongo
 cryptography
+text_blind_watermark
