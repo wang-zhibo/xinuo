@@ -73,6 +73,7 @@ class Xinuo(Plugin):
             self.watermark_encryption_status = self.conf["watermark_encryption_status"]
             self.watermark_encryption_password = self.conf["watermark_encryption_password"]
             self.watermark_encryption_watermark = self.conf["watermark_encryption_watermark"]
+            self.youdao_qanything_cookies = self.conf["youdao_qanything_cookies"]
             logger.info("[Xinuo] inited")
         except Exception as e:
             log_msg = f"{tag}: error: {e}"
@@ -236,6 +237,16 @@ class Xinuo(Plugin):
             agSn = "AG2023121816029247XRMI"
             logger.info(f"{tag}: {gpt_text}")
             msg = self.fun_gpt40(gpt_text, tag, agSn)
+            content = f"{tag}\n"
+            content += f"{msg}"
+            reply = self.create_reply(ReplyType.TEXT, content)
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS
+        elif content[:3].lower() == "知识库":
+            gpt_text = content[3:].strip()
+            tag = "知识库"
+            logger.info(f"{tag}: {gpt_text}")
+            msg = self.fun_qanything_chat(gpt_text)
             content = f"{tag}\n"
             content += f"{msg}"
             reply = self.create_reply(ReplyType.TEXT, content)
@@ -497,7 +508,6 @@ class Xinuo(Plugin):
             logger.error(f"{tag}: 服务器内部错误 {e}")
         return msg
 
-
     def edit_config_json(self, key, value):
         curdir = os.path.dirname(__file__)
         config_path = os.path.join(curdir, "config.json")
@@ -509,8 +519,7 @@ class Xinuo(Plugin):
             json.dump(data, file, indent=4)
         logger.info(f"修改配置文件: key {key}, value: {value}")
 
-
-    ###### gnomic PGT-4.0 #####
+    # ##### gnomic PGT-4.0 #####
     def get_keyid(self):
         # headers keyid
         code = """
@@ -540,7 +549,7 @@ class Xinuo(Plugin):
         msg = f"{tag}: 服务器睡着了,请稍后再试"
         try:
             url = f"https://gnomic.cn/api/app/appmobile/{self.gpt40_phone}?randomStr=blockPuzzle&grant_type=password"
-            payload={}
+            payload = {}
             timestamp = self.get_timestamp()
             passid = self.get_passid()
             keyid = self.get_keyid()
@@ -1019,6 +1028,58 @@ class Xinuo(Plugin):
         except Exception as e:
             log_msg = f"{tag}: error: {e}"
             logger.error(log_msg)
+        return msg
+
+    def fun_qanything_chat(self, question):
+        tag = "知识库"
+        msg = f"{tag}: 服务器睡着了,请稍后再试"
+        try:
+            url = "https://ai.youdao.com/saas/api/q_anything/saas/chat_stream"
+            params = None
+            payload = json.dumps({
+               "kbIds": [
+                  "KB31cad7f5c4944905bab6b105a7ae409a"
+               ],
+               "history": [],
+               "question": question
+            })
+            headers = {
+               'authority': 'ai.youdao.com',
+               'accept': 'text/event-stream,application/json, text/event-stream',
+               'accept-language': 'zh-CN,zh;q=0.9',
+               'origin': 'https://ai.youdao.com',
+               'referer': 'https://ai.youdao.com/saas/qanything/',
+               'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+               'sec-ch-ua-mobile': '?0',
+               'sec-ch-ua-platform': '"Linux"',
+               'sec-fetch-dest': 'empty',
+               'sec-fetch-mode': 'cors',
+               'sec-fetch-site': 'same-origin',
+               'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+               'Cookie': self.youdao_qanything_cookies,
+               'content-type': 'application/json'
+            }
+            response = requests.request("POST", url, stream=True,
+                                        headers=headers, params=params,
+                                        data=payload, verify=False,
+                                        timeout=(5, 90))
+            if response.status_code == 200:
+                response.encoding = "utf-8"
+                for line in response.iter_lines(decode_unicode=True):
+                    if line:
+                        parts = line.split(":", 1)
+                        if len(parts) == 2:
+                            event_field = parts[0].strip()
+                            data_field = parts[1].strip()
+                            if event_field == "data":
+                                if data_field and data_field[:1] == "{":
+                                    # print([data_field])
+                                    data_field_json = json.loads(data_field)
+                                    if data_field_json.get("result").get("question"):
+                                        response = data_field_json.get("result").get("response")
+                                        msg = f"{response}"
+        except Exception as e:
+            logger.error(f"{tag}: 服务器内部错误 {e}")
         return msg
 
 
