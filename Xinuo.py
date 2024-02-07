@@ -1080,6 +1080,6 @@ class Xinuo(Plugin):
                                         msg = f"{response}"
         except Exception as e:
             logger.error(f"{tag}: 服务器内部错误 {e}")
-        return msg
+        return f"{msg}\n默认单轮对话,多轮对话正在开发中..."
 
 
