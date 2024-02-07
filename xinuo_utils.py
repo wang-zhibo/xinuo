@@ -44,6 +44,10 @@ class Util:
         :input_str: 要添加盲水印的文本
         :password: 盲水印密码
         :watermark: 盲水印文本
+        消息解密
+        text_blind_wm2 = TextBlindWatermark2(password=password)
+        wm_extract = text_blind_wm2.extract(text_with_wm)
+        print('提取内容：', wm_extract)
         """
         text_with_wm = input_str
         try:
@@ -53,4 +57,5 @@ class Util:
             print(f"encryption_text error: {e}")
             pass
         return text_with_wm
+
 
