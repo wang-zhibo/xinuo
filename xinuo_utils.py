@@ -38,7 +38,7 @@ class Util:
         e_context.action = EventAction.BREAK_PASS
 
     @staticmethod
-    def encryption_text(input_str: str, password: str, watermark: str) -> str:
+    def watermark_encryption_text(input_str: str, password: str, watermark: str) -> str:
         """
         文本添加盲水印
         :input_str: 要添加盲水印的文本

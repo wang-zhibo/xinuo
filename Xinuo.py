@@ -70,9 +70,9 @@ class Xinuo(Plugin):
             self.gpt40_abc12 = self.conf["gpt40_abc12"]
             self.gpt40_website_key = self.conf["gpt40_website_key"]
             self.gpt40_phone = self.conf["gpt40_phone"]
-            self.encryption_status = self.conf["encryption_status"]
-            self.encryption_password = self.conf["encryption_password"]
-            self.encryption_watermark = self.conf["encryption_watermark"]
+            self.watermark_encryption_status = self.conf["watermark_encryption_status"]
+            self.watermark_encryption_password = self.conf["watermark_encryption_password"]
+            self.watermark_encryption_watermark = self.conf["watermark_encryption_watermark"]
             logger.info("[Xinuo] inited")
         except Exception as e:
             log_msg = f"{tag}: error: {e}"
@@ -92,7 +92,31 @@ class Xinuo(Plugin):
         content = context.content.strip()
         session_id = context["session_id"]
         logger.debug(f"[xinuo] on_handle_context. session_id: {session_id}, content: {content}")
-        if content.lower() == "linkai签到":
+        if content.lower() == "开启盲水印":
+            tag = '盲水印'
+            if not Util.is_admin(e_context):
+                Util.set_reply_text(f"{tag}:\n需要管理员权限执行", e_context, level=ReplyType.ERROR)
+                return
+            if self.watermark_encryption_status is False:
+                self.open_watermark()
+                self.watermark_encryption_status = True
+            content = f"{tag}:\n 已开启"
+            reply = self.create_reply(ReplyType.TEXT, content)
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS
+        elif content.lower() == "关闭盲水印":
+            tag = '盲水印'
+            if not Util.is_admin(e_context):
+                Util.set_reply_text(f"{tag}:\n需要管理员权限执行", e_context, level=ReplyType.ERROR)
+                return
+            if self.watermark_encryption_status is True:
+                self.close_watermark()
+                self.watermark_encryption_status = False
+            content = f"{tag}:\n 已关闭"
+            reply = self.create_reply(ReplyType.TEXT, content)
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS
+        elif content.lower() == "linkai签到":
             msg = self.linkai_sign_in()
             content = "linkai签到\n"
             content += f"{msg}"
@@ -261,10 +285,10 @@ class Xinuo(Plugin):
         reply = Reply()
         reply.type = reply_type
         # 是否开启 信息添加盲水印
-        if self.encryption_status:
+        if self.watermark_encryption_status:
             logger.info("消息已经开启添加盲水印正在处理...")
-            content = Util.encryption_text(
-                content, self.encryption_password, self.encryption_watermark
+            content = Util.watermark_encryption_text(
+                content, self.watermark_encryption_password, self.watermark_encryption_watermark
             )
         reply.content = content
         return reply
@@ -288,6 +312,16 @@ class Xinuo(Plugin):
         help_text += "输入 '起名大师'，起名大师 \n"
         help_text += "输入 '解名大师'，解名大师 \n"
         return help_text
+
+    def open_watermark(self):
+        key = "watermark_encryption_status"
+        values = True
+        self.edit_config_json(key, values)
+
+    def close_watermark(self):
+        key = "watermark_encryption_status"
+        values = False
+        self.edit_config_json(key, values)
 
     def get_timestamp(self, n=13):
         # 获取时间戳  返回13位或者10位时间戳

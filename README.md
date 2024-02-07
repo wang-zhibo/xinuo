@@ -44,9 +44,9 @@ cp config.example.json config.json
     "gpt40_abc12": "fbb1681d275c91435bd758ee85719880",   gnomic 网站的浏览器指纹   固定
     "gpt40_website_key": "huizhihuyu201707",             gnomic 网站的 key         固定
     "gpt40_phone": "xxx",                                gnomic 网站的 手机号
-    "encryption_status": false,                             是否开启消息添加盲水印
-    "encryption_password": "gm.zhibo.wang@gmail.com",       盲水印 加密密码
-    "encryption_watermark": "github.com/wang-zhibo/xinuo/"  要添加的盲水印文本
+    "watermark_encryption_status": false,                             是否开启消息添加盲水印
+    "watermark_encryption_password": "gm.zhibo.wang@gmail.com",       盲水印 加密密码
+    "watermark_encryption_watermark": "github.com/wang-zhibo/xinuo/"  要添加的盲水印文本
 }
 
 ```
@@ -140,5 +140,31 @@ bot gpt35你是什么模型
 [DEBUG][2024-02-01 15:03:33][chat_channel.py:280] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] GPT-3.5
 我是一个基于OpenAI GPT-3.5模型的AI机器人，使用自然语言处理技术和深度学习算法来生成答案。我的训练数据来自于互联网上的大量文本，并经过了机器学习算法的学习和优化，可以根据用户的提问和输入进行智能回复。虽然我可以生成一些令人印象深刻的答案，但我仍然有很多限制，需要不断学习和改进
 -----------------------------------
+
+
+bot 开启盲水印
+
+[DEBUG][2024-02-07 10:34:44][Xinuo.py:94] - [xinuo] on_handle_context. session_id: @7a2684574e3f76a424e1cde2c68529d98b3a7286bd0c3b6e435b125618341904, content: 开启盲水印
+[INFO][2024-02-07 10:34:44][Xinuo.py:289] - 消息已经开启添加盲水印正在处理...
+[DEBUG][2024-02-07 10:34:44][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
+[DEBUG][2024-02-07 10:34:44][chat_channel.py:172] - [WX] ready to decorate reply: Reply(type=TEXT, content=盲水印:
+ 已开启)
+[DEBUG][2024-02-07 10:34:44][plugin_manager.py:187] - Plugin BANWORDS triggered by event Event.ON_DECORATE_REPLY
+[DEBUG][2024-02-07 10:34:44][chat_channel.py:282] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] 盲水印:
+ 已开启
+
+
+bot 关闭盲水印
+
+[DEBUG][2024-02-07 10:34:51][Xinuo.py:94] - [xinuo] on_handle_context. session_id: @7a2684574e3f76a424e1cde2c68529d98b3a7286bd0c3b6e435b125618341904, content: 关闭盲水印
+[INFO][2024-02-07 10:34:51][Xinuo.py:508] - 修改配置文件: key watermark_encryption_status, value: False
+[DEBUG][2024-02-07 10:34:51][plugin_manager.py:192] - Plugin XINUO breaked event Event.ON_HANDLE_CONTEXT
+[DEBUG][2024-02-07 10:34:51][chat_channel.py:172] - [WX] ready to decorate reply: Reply(type=TEXT, content=盲水印:
+ 已关闭)
+[DEBUG][2024-02-07 10:34:51][plugin_manager.py:187] - Plugin BANWORDS triggered by event Event.ON_DECORATE_REPLY
+[DEBUG][2024-02-07 10:34:51][chat_channel.py:282] - [WX] ready to send reply: Reply(type=TEXT, content=[🤖] 盲水印:
+ 已关闭
+
+
 
 ```
