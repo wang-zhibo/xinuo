@@ -13,7 +13,7 @@ try:
     from bridge.context import ContextType
     from bridge.reply import Reply, ReplyType
     import os
-    import re
+    # import re
     import json
     import time
     import execjs
@@ -27,12 +27,12 @@ try:
     from fake_useragent import UserAgent
     from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
     from cryptography.hazmat.backends import default_backend
-    import base64
     from .xinuo_utils import Util
 
     import uuid
     import pymongo
-    import hashlib
+    # import base64
+    # import hashlib
     import urllib3
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 except Exception as e:
@@ -576,7 +576,7 @@ class Xinuo(Plugin):
             if response.status_code == 200:
                 res_json = response.json()
                 if res_json.get("code") == 0:
-                    result = res_json.get("data")
+                    # result = res_json.get("data")
                     msg = "成功"
             # print(response.text)
             # {"code":0,"message":"ok","data":true}
@@ -592,7 +592,7 @@ class Xinuo(Plugin):
             logger.info(f"{tag}: sms_code {sms_code}")
             url = f"https://gnomic.cn/api/auth/oauth2/token?mobile=APP-SMS@{self.gpt40_phone}&grant_type=mobile&code={sms_code}&scope=server"
             logger.info(f"{tag}: url {url}")
-            payload={}
+            payload = {}
             timestamp = self.get_timestamp()
             passid = self.get_passid()
             keyid = self.get_keyid()
@@ -639,7 +639,6 @@ class Xinuo(Plugin):
         except Exception as e:
             logger.error(f"{tag}: 服务器内部错误 {e}")
         return msg
-
 
     def run_gpt40_put_prompt(self, input_prompt, tag, agSn):
         result = None
@@ -713,7 +712,6 @@ class Xinuo(Plugin):
             aee = self.get_aee(timestamp, self.gpt40_website_key, self.gpt40_abc12)
             url = "https://gnomic.cn/api/bbs/front/im/chat/history/application/chat"
             params = {"key": _id}
-            payload = {}
             headers = {
               'Host': 'gnomic.cn',
               'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
@@ -761,7 +759,6 @@ class Xinuo(Plugin):
             logger.error(f"{tag_}: 服务器内部错误 {e}")
         return result_text
 
-
     def fun_gpt40(self, gpt_text, tag, agSn):
         # GPT-4.0
         msg = f"{tag}: 服务器睡着了,请稍后再试"
@@ -782,9 +779,7 @@ class Xinuo(Plugin):
             logger.error(f"{tag}: 服务器内部错误 {e}")
         return msg
 
-    ###### gnomic PGT-4.0 #####
-
-
+    # ##### gnomic PGT-4.0 #####
 
     def daily_api(self):
         # 每日一言
@@ -840,12 +835,11 @@ class Xinuo(Plugin):
             logger.error(f"{tag}: 服务器内部错误 {e}")
         return msg
 
-
     def link_ai_login(self):
         # linkai 登录
         token = ""
         tag = "linkai登录"
-        msg = f"{tag}: 服务器睡着了,请稍后再试"
+        # msg = f"{tag}: 服务器睡着了,请稍后再试"
         try:
             url = "https://link-ai.tech/api/login"
             payload = f"username={self.linkai_user}&password={self.linkai_pwd}"
@@ -885,7 +879,6 @@ class Xinuo(Plugin):
         except Exception as e:
             logger.error(f"{tag}: error: {e}")
         return token
-
 
     def linkai_sign_in(self):
         # linkai 每日签到
@@ -933,7 +926,7 @@ class Xinuo(Plugin):
                     self.link_ai_login()
                 time.sleep(2)
         except Exception as e:
-            log_msg = "{tag}: error: {e}"
+            log_msg = f"{tag}: error: {e}"
             logger.error(log_msg)
         return msg
 
@@ -988,19 +981,16 @@ class Xinuo(Plugin):
             logger.error(log_msg)
         return msg
 
-
     def get_md5(self, input_str):
         # MD5
         return hashlib.md5(input_str.encode(encoding='UTF-8')).hexdigest()
-
 
     def get_uuid(self):
         # 生成uuid
         return str(uuid.uuid1()).replace("-", "")
 
-
     def mongo_con_parse(self):
-        confing=self.mongodb_config
+        confing = self.mongodb_config
         conn = pymongo.MongoClient(confing['host'], confing['port'])
         conn = conn[confing['db']]
         if confing.get('user'):
