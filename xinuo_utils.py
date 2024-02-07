@@ -10,6 +10,7 @@
 from config import global_config
 from bridge.reply import Reply, ReplyType
 from plugins.event import EventContext, EventAction
+from text_blind_watermark import TextBlindWatermark2
 
 
 class Util:
@@ -35,4 +36,21 @@ class Util:
         reply = Reply(level, content)
         e_context["reply"] = reply
         e_context.action = EventAction.BREAK_PASS
+
+    @staticmethod
+    def encryption_text(input_str: str, password: str, watermark: str) -> str:
+        """
+        文本添加盲水印
+        :input_str: 要添加盲水印的文本
+        :password: 盲水印密码
+        :watermark: 盲水印文本
+        """
+        text_with_wm = input_str
+        try:
+            text_blind_wm = TextBlindWatermark2(password=password)
+            text_with_wm = text_blind_wm.embed(text=input_str, watermark=watermark)
+        except Exception as e:
+            print(f"encryption_text error: {e}")
+            pass
+        return text_with_wm
 

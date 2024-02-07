@@ -44,7 +44,7 @@ except Exception as e:
     desire_priority=66,                   # 插件的优先级
     hidden=False,                         # 插件是否隐藏
     desc="个人开发的一些常用工具",        # 插件的描述
-    version="0.0.4",                      # 插件的版本号
+    version="0.0.5",                      # 插件的版本号
     author="gm.zhibo.wang@gmail.com",                       # 插件的作者
 )
 class Xinuo(Plugin):
@@ -70,6 +70,9 @@ class Xinuo(Plugin):
             self.gpt40_abc12 = self.conf["gpt40_abc12"]
             self.gpt40_website_key = self.conf["gpt40_website_key"]
             self.gpt40_phone = self.conf["gpt40_phone"]
+            self.encryption_status = self.conf["encryption_status"]
+            self.encryption_password = self.conf["encryption_password"]
+            self.encryption_watermark = self.conf["encryption_watermark"]
             logger.info("[Xinuo] inited")
         except Exception as e:
             log_msg = f"{tag}: error: {e}"
@@ -254,12 +257,15 @@ class Xinuo(Plugin):
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
         """
 
-    def create_reply(self, reply_type, content, open_encryption=False):
+    def create_reply(self, reply_type, content):
         reply = Reply()
         reply.type = reply_type
         # 是否开启 信息添加盲水印
-        if open_encryption:
-            content = Util.encryption_text(content)
+        if self.encryption_status:
+            logger.info("消息已经开启添加盲水印正在处理...")
+            content = Util.encryption_text(
+                content, self.encryption_password, self.encryption_watermark
+            )
         reply.content = content
         return reply
 
@@ -327,7 +333,7 @@ class Xinuo(Plugin):
             vendor = "web"
             keyfrom = "fanyi.web"
             key_ = 'fsdsogkndfokasodnaso'
-            encoding='gb18030'
+            encoding = 'gb18030'
             md5_text = f'client={client}&mysticTime={mysticTime}&product={keyid}&key={key_}'
             md5 = hashlib.md5(md5_text.encode(encoding)).hexdigest()
             payload = {
@@ -387,7 +393,7 @@ class Xinuo(Plugin):
                 if r_json_code == 0:
                     translateResult = res_json.get("translateResult")
                     if len(translateResult) > 0:
-                        end_fanyi  = translateResult[0][0].get("tgt")
+                        end_fanyi = translateResult[0][0].get("tgt")
                         if end_fanyi:
                             msg = f"原始本文:{fanyi_text}\n翻译后文本:{end_fanyi}"
                         else:

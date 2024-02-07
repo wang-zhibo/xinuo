@@ -5,5 +5,7 @@
     "gpt40_authorization": "Bearer xxx",
     "gpt40_abc12": "fbb1681d275c91435bd758ee85719880",
     "gpt40_website_key": "huizhihuyu201707",
-    "gpt40_phone": "xxx"
+    "encryption_status": false,
+    "encryption_password": "gm.zhibo.wang@gmail.com",
+    "encryption_watermark": "github.com/wang-zhibo/xinuo/"
 }
