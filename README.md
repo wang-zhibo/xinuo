@@ -6,7 +6,6 @@ linkai积分签到
 linkai总积分查看
 配合定时任务timetask 运行  完美!!!
 翻译   // 逆向破解有道翻译接口   翻译+要翻译的内容 + 是连接起来不是添加+这个符号
-       // 需要安装 pip install fake-useragent、  pycryptodome
 每日一言
 
 gnomic ai api破解直接调用api 供机器人使用
@@ -17,9 +16,9 @@ gpt40
 起名大师
 解名大师
 
-
 gpt35 也是破解的某网站 可免费使用
 
+消息添加盲水印    使用 https://github.com/guofei9987/text_blind_watermark
 
 ```
 
@@ -28,7 +27,8 @@ gpt35 也是破解的某网站 可免费使用
 
 安装仓库源记录的插件：#installp xinuo
 安装指定仓库的插件：#installp https://github.com/wang-zhibo/xinuo.git 
-
+安装依赖
+pip install -r requirements.txt 
 
 cp config.example.json config.json
 
