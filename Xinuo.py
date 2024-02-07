@@ -74,6 +74,7 @@ class Xinuo(Plugin):
             self.watermark_encryption_password = self.conf["watermark_encryption_password"]
             self.watermark_encryption_watermark = self.conf["watermark_encryption_watermark"]
             self.youdao_qanything_cookies = self.conf["youdao_qanything_cookies"]
+            self.youdao_qanything_kbids = None
             logger.info("[Xinuo] inited")
         except Exception as e:
             log_msg = f"{tag}: error: {e}"
@@ -1030,16 +1031,48 @@ class Xinuo(Plugin):
             logger.error(log_msg)
         return msg
 
+    def fun_qanything_kb_list(self):
+        # 获取所有知识库列表
+        tag = "qanything 知识库列表"
+        try:
+            url = "https://ai.youdao.com/saas/api/q_anything/saas/kb_list"
+            headers = {
+               'authority': 'ai.youdao.com',
+               'accept': 'application/json, text/plain, */*',
+               'accept-language': 'zh-CN,zh;q=0.9',
+               'referer': 'https://ai.youdao.com/saas/qanything/',
+               'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+               'sec-ch-ua-mobile': '?0',
+               'sec-ch-ua-platform': '"Linux"',
+               'sec-fetch-dest': 'empty',
+               'sec-fetch-mode': 'cors',
+               'sec-fetch-site': 'same-origin',
+               'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+               'Cookie': self.youdao_qanything_cookies
+            }
+            response = requests.request("GET", url, headers=headers,
+                                        timeout=(5, 30), verify=True)
+            if response.status_code == 200:
+                response.encoding = "utf-8"
+                res_json = response.json()
+                # logger.info(f"{tag}: body: {res_json}")
+                if res_json.get("errorCode") == "0":
+                    self.youdao_qanything_kbids = [i.get("kbId") for i in res_json.get("result")]
+                    # logger.info(f"{tag}: kbIds: {self.youdao_qanything_kbids}")
+        except Exception as e:
+            logger.error(f"{tag}: 服务器内部错误 {e}")
+
     def fun_qanything_chat(self, question):
         tag = "知识库"
         msg = f"{tag}: 服务器睡着了,请稍后再试"
         try:
+            if self.youdao_qanything_kbids is None:
+                self.fun_qanything_kb_list()
+            logger.info(f"{tag}: kbIds: {self.youdao_qanything_kbids}")
             url = "https://ai.youdao.com/saas/api/q_anything/saas/chat_stream"
             params = None
             payload = json.dumps({
-               "kbIds": [
-                  "KB31cad7f5c4944905bab6b105a7ae409a"
-               ],
+               "kbIds": self.youdao_qanything_kbids,
                "history": [],
                "question": question
             })
@@ -1061,7 +1094,7 @@ class Xinuo(Plugin):
             }
             response = requests.request("POST", url, stream=True,
                                         headers=headers, params=params,
-                                        data=payload, verify=False,
+                                        data=payload, verify=True,
                                         timeout=(5, 90))
             if response.status_code == 200:
                 response.encoding = "utf-8"
