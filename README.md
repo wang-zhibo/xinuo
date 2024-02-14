@@ -65,7 +65,7 @@ cp config.example.json config.json
     "linkai_authorization": "", linkai token   自动登录获取
     "gpt40_authorization": "Bearer xxx",   gnomic 网站的 token   可使用机器人 触发登录短信 ==操作自动设置
     "gpt40_abc12": "fbb1681d275c91435bd758ee85719880",   gnomic 网站的浏览器指纹   固定
-    "gpt40_website_key": "huizhihuyu201707",             gnomic 网站的 key         固定
+    "gpt40_website_key": "huizhihuyu201707",             gnomic 网站的 加密key     固定
     "gpt40_phone": "xxx",                                gnomic 网站的 手机号
     "watermark_encryption_status": false,                             是否开启消息添加盲水印
     "watermark_encryption_password": "gm.zhibo.wang@gmail.com",       盲水印 加密密码
