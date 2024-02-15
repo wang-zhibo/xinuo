@@ -136,6 +136,7 @@ class Xinuo(Plugin):
             msg = self.create_cid()
             content = "验证码识别\n"
             content += f"CID:{msg}"
+            content += f"接口文档 http://ocr.xinuo.vip/ocr.docs\n有效时间7天"
             reply = self.create_reply(ReplyType.TEXT, content)
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS
