@@ -89,7 +89,7 @@ class Xinuo(Plugin):
     def on_handle_context(self, e_context: EventContext):
         if e_context["context"].type not in [
             ContextType.TEXT,
-            # ContextType.FILE
+            ContextType.FILE
         ]:
             return
         context = e_context['context']
@@ -125,6 +125,35 @@ class Xinuo(Plugin):
                 reply = self.create_reply(ReplyType.TEXT, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
+            elif content.lower() == "开启知识库文件上传":
+                tag = '知识库文件上传'
+                if not Util.is_admin(e_context):
+                    Util.set_reply_text(
+                        f"{tag}:\n需要管理员权限执行",
+                        e_context, level=ReplyType.ERROR)
+                    return
+                if self.qanything_file_upload_status is False:
+                    self.open_qanything_file_upload()
+                    self.qanything_file_upload_status = True
+                content = f"{tag}:\n 已开启"
+                reply = self.create_reply(ReplyType.TEXT, content)
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS
+            elif content.lower() == "关闭知识库文件上传":
+                tag = '知识库文件上传'
+                if not Util.is_admin(e_context):
+                    Util.set_reply_text(
+                        f"{tag}:\n需要管理员权限执行",
+                        e_context, level=ReplyType.ERROR)
+                    return
+                if self.qanything_file_upload_status is True:
+                    self.close_qanything_file_upload()
+                    self.qanything_file_upload_status = False
+                content = f"{tag}:\n 已关闭"
+                reply = self.create_reply(ReplyType.TEXT, content)
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS
+
             elif content.lower() == "linkai签到":
                 msg = self.linkai_sign_in()
                 content = "linkai签到\n"
@@ -313,7 +342,6 @@ class Xinuo(Plugin):
                     f"{tag}:\n需要管理员权限执行",
                     e_context, level=ReplyType.ERROR)
                 return
-            logger.info(f"{tag}: {gpt_text}")
             msg = self.fun_qanything_upload_file(content)
             content = f"{tag}\n"
             content += f"{msg}"
@@ -358,12 +386,26 @@ class Xinuo(Plugin):
         return help_text
 
     def open_watermark(self):
+        # 修改盲水印配置状态
         key = "watermark_encryption_status"
         values = True
         self.edit_config_json(key, values)
 
     def close_watermark(self):
+        # 修改盲水印配置状态
         key = "watermark_encryption_status"
+        values = False
+        self.edit_config_json(key, values)
+
+    def open_qanything_file_upload(self):
+        # 修改知识库上传文件配置状态
+        key = "qanything_file_upload_status"
+        values = True
+        self.edit_config_json(key, values)
+
+    def close_qanything_file_upload(self):
+        # 修改知识库上传文件配置状态
+        key = "open_qanything_file_upload"
         values = False
         self.edit_config_json(key, values)
 
@@ -1148,7 +1190,7 @@ class Xinuo(Plugin):
         _, file_extension = os.path.splitext(file_path)
 
         # 检查是否为指定的格式
-        if file_extension.lower() in ['.md', '.txt', '.pdf', '.docx', ".xlsx", ".pptx", ".eml", '.csv']:
+        if file_extension.lower() in ['.md', '.txt', '.pdf', '.docx', 'doc', '.xlsx', '.pptx', '.eml', '.csv']:
             return True
         else:
             return False
