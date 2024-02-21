@@ -70,7 +70,8 @@ cp config.example.json config.json
     "watermark_encryption_status": false,                             是否开启消息添加盲水印
     "watermark_encryption_password": "gm.zhibo.wang@gmail.com",       盲水印 加密密码
     "watermark_encryption_watermark": "github.com/wang-zhibo/xinuo/",  要添加的盲水印文本
-    "youdao_qanything_cookies": ""
+    "youdao_qanything_cookies": "",
+    "qanything_file_upload_status": false
 }
 
 ```

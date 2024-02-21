@@ -8,5 +8,6 @@
     "watermark_encryption_status": false,
     "watermark_encryption_password": "gm.zhibo.wang@gmail.com",
     "watermark_encryption_watermark": "github.com/wang-zhibo/xinuo/",
-    "youdao_qanything_cookies": ""
+    "youdao_qanything_cookies": "",
+    "qanything_file_upload_status": false
 }
