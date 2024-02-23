@@ -15,6 +15,7 @@ try:
     from plugins import *
     from bridge.context import ContextType
     from bridge.reply import Reply, ReplyType
+    from channel.chat_message import ChatMessage
     import os
     # import re
     import json
@@ -97,10 +98,10 @@ class Xinuo(Plugin):
             ContextType.FILE
         ]:
             return
-        context = e_context['context']
-        content = context.content.strip()
-        session_id = context["session_id"]
-        logger.debug(f"[xinuo] on_handle_context. session_id: {session_id}, content: {content}")
+        e_msg: ChatMessage = e_context["context"]["msg"]
+        content = e_context["context"].content.strip()
+        user_id = e_msg.from_user_id
+        logger.info(f"[xinuo] on_handle_context. user_id: {user_id}, content: {content}")
         if e_context["context"].type == ContextType.TEXT:
             if content.lower() == "开启消息盲水印":
                 tag = '消息盲水印'
@@ -347,7 +348,7 @@ class Xinuo(Plugin):
                     f"{tag}:\n需要管理员权限执行",
                     e_context, level=ReplyType.ERROR)
                 return
-            msg = self.fun_qanything_upload_file(content)
+            msg = self.fun_qanything_upload_file(content, e_msg)
             content = f"{tag}\n"
             content += f"{msg}"
             reply = self.create_reply(ReplyType.TEXT, content)
@@ -1130,30 +1131,45 @@ class Xinuo(Plugin):
             }
             response = requests.request("GET", url, headers=headers,
                                         timeout=(5, 30), verify=True)
-            if response.status_code == 200:
+            resp_code = response.status_code
+            if resp_code == 200:
                 response.encoding = "utf-8"
                 res_json = response.json()
                 # logger.info(f"{tag}: body: {res_json}")
-                if res_json.get("errorCode") == "0":
+                errorCode = res_json.get("errorCode")
+                if errorCode == "0":
                     self.youdao_qanything_kbids = [i.get("kbId") for i in res_json.get("result")]
-                    # logger.info(f"{tag}: kbIds: {self.youdao_qanything_kbids}")
+                    logger.info(f"{tag}: kbIds: {self.youdao_qanything_kbids}")
+                else:
+                    logger.error(f"{tag}: 获取失败 errorCode: {errorCode}")
+            else:
+                logger.error(f"{tag}: 获取失败 resp_code: {resp_code}")
         except Exception as e:
             logger.error(f"{tag}: 服务器内部错误 {e}")
 
-    def fun_qanything_upload_file(self, content):
+    def fun_qanything_upload_file(self, content, e_msg):
         tag = "qanything 知识库上传文件"
-        msg = f"{tag}: 服务器睡着了,请稍后再试"
+        msg = "服务器睡着了,请稍后再试"
+        # logger.info(f"{tag}: content: {content}")
         # [WX]receive attachment msg, file_name=tmp/ChatGPT医疗行业应用白皮书.pdf  content
         if self.qanything_file_upload_status:
             if not self.check_file_format_qanything(content):
                 msg = f"{tag} 文件格式不支持，PASS！"
                 logger.info(msg)
-        if os.path.isfile(content):
-            logger.info(f"{tag} 准备上传...")
+        e_msg.prepare()
+        time.sleep(5)
+        is_file_status = os.path.isfile(content)
+        if is_file_status:
             filename = os.path.basename(content)
+            logger.info(f"{tag} 准备上传..., filename: {filename}")
             url = "https://ai.youdao.com/saas/api/q_anything/saas/upload_file"
             # 知识库 id
-            payload = {'kbId': 'KB31cad7f5c4944905bab6b105a7ae409a'}
+            if self.youdao_qanything_kbids is None:
+                self.fun_qanything_kb_list()
+                time.sleep(1)
+            # 默认上传到最后一个知识库中
+            kbId = self.youdao_qanything_kbids[-1]
+            payload = {'kbId': kbId}
             files = [
                 (
                     'file',
@@ -1180,15 +1196,20 @@ class Xinuo(Plugin):
                 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'Cookie': self.youdao_qanything_cookies
             }
-            response = requests.request(
-                "POST", url, headers=headers, data=payload, files=files,
-                timeout=(10, 60), verify=True)
-            if response.status_code == 200:
+            try:
+                response = requests.request(
+                    "POST", url, headers=headers, data=payload, files=files,
+                    timeout=(30, 120), verify=True)
                 response.encoding = "utf-8"
-                res_json = response.json()
-                # {"errorCode":"0","msg":"SUCCESS","requestId":"42fc7946-1258-4b8d-b90c-fbeb1da43383","result":[{"fileId":"745c062624534b4d8aee2dd077b562b5","fileName":"ChatGPT医疗行业应用白皮书.pdf","status":"0"}]}
-                if res_json.get("errorCode") == 0:
-                    msg = f"{filename} 上传成功"
+                logger.info(f"{tag}: response text: {response.text}")
+                if response.status_code == 200:
+                    res_json = response.json()
+                    # {"errorCode":"0","msg":"SUCCESS","requestId":"42fc7946-1258-4b8d-b90c-fbeb1da43383","result":[{"fileId":"745c062624534b4d8aee2dd077b562b5","fileName":"ChatGPT医疗行业应用白皮书.pdf","status":"0"}]}
+                    if res_json.get("errorCode") == "0":
+                        msg = f"{filename} 上传成功"
+            except Exception as e:
+                log_msg = f"{tag}: error: {e}"
+                logger.error(log_msg)
         return msg
 
     def check_file_format_qanything(self, file_path):
@@ -1206,6 +1227,7 @@ class Xinuo(Plugin):
         try:
             if self.youdao_qanything_kbids is None:
                 self.fun_qanything_kb_list()
+                time.sleep(1)
             logger.info(f"{tag}: kbIds: {self.youdao_qanything_kbids}")
             url = "https://ai.youdao.com/saas/api/q_anything/saas/chat_stream"
             params = None
@@ -1261,10 +1283,10 @@ class Xinuo(Plugin):
                                     data_field_json = json.loads(data_field)
                                     if data_field_json.get("result").get("question"):
                                         response = data_field_json.get("result").get("response")
-                                        msg = f"{response}"
+                                        msg = f"{response}\n使用{msg_tag}"
         except Exception as e:
             logger.error(f"{tag}: 服务器内部错误 {e}")
-        return f"{msg}\n使用{msg_tag}"
+        return msg
 
     # ##### qanything #######
 
