@@ -6,6 +6,9 @@
 # Date   :
 # Desc   :
 
+"""
+v0.0.6  完成qanything 知识库的功能 !
+"""
 
 try:
     from common.log import logger
@@ -45,7 +48,7 @@ except Exception as e:
     hidden=False,                         # 插件是否隐藏
     desc="个人开发的一些常用工具",        # 插件的描述
     version="0.0.5",                      # 插件的版本号
-    author="gm.zhibo.wang@gmail.com",                       # 插件的作者
+    author="gm.zhibo.wang@gmail.com",     # 插件的作者
 )
 class Xinuo(Plugin):
 
@@ -73,6 +76,8 @@ class Xinuo(Plugin):
             self.watermark_encryption_status = self.conf.get("watermark_encryption_status", False)
             self.watermark_encryption_password = self.conf.get("watermark_encryption_password", "")
             self.watermark_encryption_watermark = self.conf.get("watermark_encryption_watermark", "")
+            self.youdao_qanything_user = self.conf.get("youdao_qanything_user", "")
+            self.youdao_qanything_pwd = self.conf.get("youdao_qanything_pwd", "")
             self.youdao_qanything_cookies = self.conf.get("youdao_qanything_cookies", "")
             self.qanything_file_upload_status = self.conf.get("qanything_file_upload_status", False)
             self.youdao_qanything_kbids = None
