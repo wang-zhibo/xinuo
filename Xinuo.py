@@ -1190,7 +1190,7 @@ class Xinuo(Plugin):
         _, file_extension = os.path.splitext(file_path)
 
         # 检查是否为指定的格式
-        if file_extension.lower() in ['.md', '.txt', '.pdf', '.docx', 'doc', '.xlsx', '.pptx', '.eml', '.csv']:
+        if file_extension.lower() in ['.md', '.txt', '.pdf', '.docx', '.doc', '.xlsx', '.pptx', '.eml', '.csv']:
             return True
         else:
             return False

@@ -1,0 +1,138 @@
+curl 'https://webzjcaptcha.reg.163.com/api/v3/check?referer=https%3A%2F%2Fpassport.youdao.com%2Fwebzj%2Fv1.0.1%2Fpub%2Findex2_new.html&zoneId=CN31&id=4f8654d96f29417085e6d70bf6a89ed6&version=2.21.5&cb=RtTgUkquXb%5Clgyk5T9RF4N6v77YaS%2Bec18DYk8UiiVfrRu9%2BslWiZUxxGyUMuPeQ&extraData=xxxxxxxxxxx&bf=0&runEnv=10&sdkVersion=undefined&token=20d73d2c94154f8c8c72827b3a61651c&type=5&width=240&data=%7B%22d%22%3A%22%22%2C%22m%22%3A%22HhAghC4u0M7zrkTrSEZsdi33%22%2C%22p%22%3A%22m1fGT%2F%5C%5CanFCgBU2ag9M0jca2sJABRLWLV7JeDORN6fZ3%22%2C%22ext%22%3A%22EDkJgHWzJ4E9OD8PhPuvbv9pKFj3%22%7D&callback=__JSONP_ajgt1mw_3' \
+  -H 'Accept: */*' \
+  -H 'Accept-Language: zh-CN,zh;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'Referer: https://passport.youdao.com/' \
+  -H 'Sec-Fetch-Dest: script' \
+  -H 'Sec-Fetch-Mode: no-cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Chromium";v="121", "Not A(Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  --compressed
+
+
+
+referer: https://passport.youdao.com/webzj/v1.0.1/pub/index2_new.html
+zoneId: CN31
+id: 4f8654d96f29417085e6d70bf6a89ed6
+version: 2.21.5
+cb: RtTgUkquXb\lgyk5T9RF4N6v77YaS+ec18DYk8UiiVfrRu9+slWiZUxxGyUMuPeQ
+extraData: xxxxxxxxxxx
+bf: 0
+runEnv: 10
+sdkVersion: undefined
+token: 20d73d2c94154f8c8c72827b3a61651c
+type: 5
+width: 240
+data: {"d":"","m":"HhAghC4u0M7zrkTrSEZsdi33","p":"m1fGT/\\anFCgBU2ag9M0jca2sJABRLWLV7JeDORN6fZ3","ext":"EDkJgHWzJ4E9OD8PhPuvbv9pKFj3"}
+callback: __JSONP_ajgt1mw_3
+
+
+
+curl 'https://ai.youdao.com/saas/api/q_anything/saas/chat_stream' \
+  -H 'authority: ai.youdao.com' \
+  -H 'accept: text/event-stream,application/json, text/event-stream' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json' \
+  -H 'cookie: JSESSIONID_NEW=4f8fec96-7120-4d5f-afb1-907b43e7fe67; NTES_YD_SESS=0DMOUuwlpxFX2C2FlBOscIK6L4n7E4OKlBMIXhFlXmy4O1zGOBYERDVfbLukNEG7wo2MJL.obd6cVXLVTNwCOz8SdroNsEGNEailORwKbFbWdVezvKVzDeYKYJXMRRmsL9400.FFtqllh7gtvFFX13BUny64OBZXt7O5M5dPd2G6Cili2kv5OmwV5xpQXtWmhPlOAf5.M3_CAQSzXZKuhWccuGmpANPXXAHo3WZwwJO2k; S_INFO=1708503108|0|0&60##|xxxxxxxxxxx; P_INFO=xxxxxxxxxxx|1708503108|1|youdao_zhiyun2018|00&99|sxi&1708050189&youdao_zhiyun2018#sxi&610100#10#0#0|&0|null|xxxxxxxxxxx; csrfToken=8e7399a6' \
+  -H 'origin: https://ai.youdao.com' \
+  -H 'referer: https://ai.youdao.com/saas/qanything/' \
+  -H 'sec-ch-ua: "Chromium";v="121", "Not A(Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
+  --data-raw '{"kbIds":["KBb98bd1fc35574df888f02a05603308c1","KB31cad7f5c4944905bab6b105a7ae409a"],"history":[{"question":"行李","response":"行李信息在参考信息中的部分是：\n\nhasBaggage Yes int 是否提供免费行李额：0表示不提供，1表示提供\n1.单程直飞时，样例：1-23，表示1PC，23kg。\n2.单程直飞时，样例：1-，表示1PC，kg数不限。\n3.单程直飞时，样例：-23，表示23kg，件数不限。\n4.单程中转一次和往返直飞录入1-23;1-23，中间用分号隔开。\n5.hasBaggage为0时，须传“-;”，表示四段均无行李（其中分号不可缺少）。\n6.hasBaggage为1时，传“-”，表示四段均按航司规定执行（其中分号不可缺少）。\n\n根据以上信息，您可以根据航班的类型和行李要求进行相应的录入。例如，如果是单程直飞且提供1件23kg的行李额，您可以输入1-23。如果是单程中转一次或往返直飞，且每段航班都提供1件23kg的行李额，您可以输入1-23;1-23。如果四段航班均不提供行李额，您可以输入\"-;\"。如果四段航班均按航司规定执行行李额，您可以输入\"-\"。\n\n希望以上信息对您有帮助。如果还有其他问题，请随时提问。"}],"question":"行李问题"}' \
+  --compressed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+t.un = this.$refs.mninput._$getValue().trim();        帐号             
+t.pw = MP.encrypt2(this.$refs.mpinput._$getValue() || "0");   加密密码
+t.pd = this.data.product;
+t.pkid = this.data.promark;
+t.tk = this.ticket;
+t.domains = this.data.domains || "";
+
+
+
+{
+    "un": "xxxxxxxxxxx",
+    "pw": "Alyhn4aWW7p8GxAwcJaVfhsyBIvrXtFRXOtr2bv/392RfeAJhfmbiv7U5VO5E85PC+oARMWvX2kFFaBUEoIhtiRWsB8PPZcnUaUxXCQgwp6io3iyO5QuM7cEFVFXm3lVCIGQMqrKcOSOK1r8ogyUq1h19iv2YqiHaMICm2HJgME=",
+    "pd": "youdao_zhiyun2018",
+    "pkid": "JXZpLHp",
+    "tk": "6adfb677d487093e77ea9687c1a3481b"
+}
+
+
+
+https://ai.youdao.com/common/urs-component-tab/main.build.js?timestamp=1707028013728
+
+
+      , e = {
+        newCDN: 1,
+        version: 4,
+        cssDomain: "".concat(t).concat("/common-styles/urs/"),
+        product: "youdao_zhiyun2018",
+        promark: "JXZpLHp",
+        host: "ai.youdao.com",
+        productKey: "108ab9ba5c844f6196682233cc199546",
+        isHttps: 1,
+        cookieDomain: "youdao.com",
+        regCookieDomain: "youdao.com",
+        needEye: 1,
+        frameSize: {
+            width: "420",
+            height: "333"
+        }
+    }
+
+
+
+   var h = "ntes_zc_"
+      , f = "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5gsH+AA4XWONB5TDcUd+xCz7ejOFHZKlcZDx+pF1i7Gsvi1vjyJoQhRtRSn950x498VUkx7rUxg1/ScBVfrRxQOZ8xFBye3pjAzfb22+RCuYApSVpJ3OO3KsEuKExftz9oFBv3ejxPlYc5yq7YiBO8XlTnQN0Sa4R4qhPO3I2MQIDAQAB-----END PUBLIC KEY-----";
+ 
+
+
+MP.encrypt2("xxxx")
+'JSzSZW7ytNAmBYo+lkiwKAA3Lxy1ENIjl8Rf9iT0J7E9r3FL8lF2dkiFhtSyYXJnglYwmKkCr82cOyTxkOq0THR+iM712Es58zn08YO4DXsCLttGLEaKAGg6ZgX+B09uUN0msZPQwABCOMB5WVIVFe9vXPxSCMqrZ7mJXLBII8g='
+
+
+
+setTicket: function(e) {
+    window.MP.TICKET = e || ""
+},
+encrypt: function(e, t) {
+    t = t.toLowerCase();
+    var n = RSA.getPublicKey(f);
+    return RSA.encrypt(e + "`" + t, n)
+},
+encrypt2: function(e) {
+    var t = RSA.getPublicKey(f);
+    return RSA.encrypt(e, t)
+},
