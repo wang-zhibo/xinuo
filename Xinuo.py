@@ -1158,7 +1158,7 @@ class Xinuo(Plugin):
                 msg = f"{tag} 文件格式不支持，PASS！"
                 logger.info(msg)
         e_msg.prepare()
-        time.sleep(5)
+        time.sleep(10)
         is_file_status = os.path.isfile(content)
         if is_file_status:
             filename = os.path.basename(content)
@@ -1200,7 +1200,7 @@ class Xinuo(Plugin):
             try:
                 response = requests.request(
                     "POST", url, headers=headers, data=payload, files=files,
-                    timeout=(30, 120), verify=True)
+                    timeout=120, verify=True)
                 response.encoding = "utf-8"
                 logger.info(f"{tag}: response text: {response.text}")
                 if response.status_code == 200:
