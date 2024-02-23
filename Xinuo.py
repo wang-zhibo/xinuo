@@ -1148,10 +1148,11 @@ class Xinuo(Plugin):
             logger.error(f"{tag}: 服务器内部错误 {e}")
 
     def fun_qanything_upload_file(self, content, e_msg):
+        """
+        支持文件格式md、txt、pdf、jpg、png、jpeg、docx、xlsx、pptx、eml、csv、单个文档小于30M,单张图片小于5M
+        """
         tag = "qanything 知识库上传文件"
         msg = "服务器睡着了,请稍后再试"
-        # logger.info(f"{tag}: content: {content}")
-        # [WX]receive attachment msg, file_name=tmp/ChatGPT医疗行业应用白皮书.pdf  content
         if self.qanything_file_upload_status:
             if not self.check_file_format_qanything(content):
                 msg = f"{tag} 文件格式不支持，PASS！"
