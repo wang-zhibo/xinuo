@@ -113,8 +113,8 @@ class Xinuo(Plugin):
                 if self.watermark_encryption_status is False:
                     self.open_watermark()
                     self.watermark_encryption_status = True
-                content = f"{tag}:\n 已开启"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = "已开启"
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content.lower() == "关闭消息盲水印":
@@ -127,8 +127,8 @@ class Xinuo(Plugin):
                 if self.watermark_encryption_status is True:
                     self.close_watermark()
                     self.watermark_encryption_status = False
-                content = f"{tag}:\n 已关闭"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = "已关闭"
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content.lower() == "开启知识库文件上传":
@@ -141,8 +141,8 @@ class Xinuo(Plugin):
                 if self.qanything_file_upload_status is False:
                     self.open_qanything_file_upload()
                     self.qanything_file_upload_status = True
-                content = f"{tag}:\n 已开启"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = "已开启"
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content.lower() == "关闭知识库文件上传":
@@ -155,56 +155,55 @@ class Xinuo(Plugin):
                 if self.qanything_file_upload_status is True:
                     self.close_qanything_file_upload()
                     self.qanything_file_upload_status = False
-                content = f"{tag}:\n 已关闭"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = "已关闭"
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
 
             elif content.lower() == "linkai签到":
+                tag = "linkai签到"
                 msg = self.linkai_sign_in()
-                content = "linkai签到\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content.lower() == "linkai积分":
+                tag = "linkai积分"
                 msg = self.linkai_balance()
-                content = "linkai积分\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content.lower() == "验证码识别cid":
+                tag = "验证码识别"
                 msg = self.create_cid()
-                content = "验证码识别\n"
-                content += f"CID:{msg}"
-                content += f"接口文档 http://ocr.xinuo.vip/ocr.docs\n有效时间7天"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = f"CID:{msg}\n接口文档 http://ocr.xinuo.vip/ocr.docs\n有效时间7天"
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content.lower() == "每日一言":
+                tag = "每日一言"
                 msg = self.daily_api()
-                content = "每日一言\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:2] == "翻译":
+                tag = "翻译"
                 logger.info(f"有道翻译: {content}")
                 fanyi_text = content[2:]
                 msg = self.youdao_fanyi(fanyi_text)
-                content = "翻译\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:5].lower() == "gpt35":
+                tag = "GPT-3.5"
                 gpt_text = content[5:].strip()
                 logger.info(f"GPT-3.5: {gpt_text}")
                 msg = self.fun_gpt35(gpt_text)
-                content = "GPT-3.5\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             # ### gnomic ####
@@ -216,92 +215,85 @@ class Xinuo(Plugin):
                         e_context, level=ReplyType.ERROR)
                     return
                 msg = self.trigger_SMS()
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:5].lower() == "验证码上传":
-                gpt_text = content[5:].strip()
                 tag = '验证码上传'
+                gpt_text = content[5:].strip()
                 if not Util.is_admin(e_context):
                     Util.set_reply_text(
                         f"{tag}:\n需要管理员权限执行",
                         e_context, level=ReplyType.ERROR)
                     return
                 msg = self.upload_SMS(gpt_text)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:5].lower() == "gpt40":
-                gpt_text = content[5:].strip()
                 tag = 'GPT-4.0'
+                gpt_text = content[5:].strip()
                 agSn = "AG2023121818230490XOYB"
                 logger.info(f"{tag}: {gpt_text}")
                 msg = self.fun_gpt40(gpt_text, tag, agSn)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:4].lower() == "绘画咒语":
-                gpt_text = content[4:].strip()
                 tag = "绘画咒语"
+                gpt_text = content[4:].strip()
                 agSn = "AG2023121816029247JEQM"
                 logger.info(f"{tag}: {gpt_text}")
                 msg = self.fun_gpt40(gpt_text, tag, agSn)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:4].lower() == "中药大师":
-                gpt_text = content[4:].strip()
                 tag = "中药大师"
+                gpt_text = content[4:].strip()
                 agSn = "AG2023120816303472AVHB"
                 logger.info(f"{tag}: {gpt_text}")
                 msg = self.fun_gpt40(gpt_text, tag, agSn)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:4].lower() == "起名大师":
-                gpt_text = content[4:].strip()
                 tag = "起名大师"
+                gpt_text = content[4:].strip()
                 agSn = "AG2023121816029247GCSA"
                 logger.info(f"{tag}: {gpt_text}")
                 msg = self.fun_gpt40(gpt_text, tag, agSn)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:4].lower() == "解名大师":
-                gpt_text = content[4:].strip()
                 tag = "解名大师"
+                gpt_text = content[4:].strip()
                 agSn = "AG2023121816029247XRMI"
                 logger.info(f"{tag}: {gpt_text}")
                 msg = self.fun_gpt40(gpt_text, tag, agSn)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             elif content[:3].lower() == "知识库":
-                gpt_text = content[3:].strip()
                 tag = "知识库"
+                gpt_text = content[3:].strip()
                 logger.info(f"{tag}: {gpt_text}")
                 msg = self.fun_qanything_chat(gpt_text)
-                content = f"{tag}\n"
-                content += f"{msg}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             # ### gnomic ####
             elif content == "人品":
+                tag = "人品"
                 praise_words = [
                                "你这个小机灵鬼！[炸弹]",
                                "你至少比蜗牛快一点。",
@@ -321,7 +313,7 @@ class Xinuo(Plugin):
                 praise = "你的人品和智商都是天生的神仙级别。[烟花]"
                 content = f"🦉 您今天的人品为【{score}】\n"
                 content += f"🦉 {praise}"
-                reply = self.create_reply(ReplyType.TEXT, content)
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
             else:
@@ -337,7 +329,7 @@ class Xinuo(Plugin):
                     reply = self.create_reply(ReplyType.TEXT, "请先配置alapi的token")
                 else:
                     content = self.get_weather(self.alapi_token, city_or_id, content)
-                    reply = self.create_reply(ReplyType.TEXT, content)
+                    reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
             """
@@ -349,15 +341,14 @@ class Xinuo(Plugin):
                     e_context, level=ReplyType.ERROR)
                 return
             msg = self.fun_qanything_upload_file(content, e_msg)
-            content = f"{tag}\n"
-            content += f"{msg}"
-            reply = self.create_reply(ReplyType.TEXT, content)
+            content = f"{msg}"
+            reply = self.create_reply(ReplyType.TEXT, tag, content)
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS
         else:
             return
 
-    def create_reply(self, reply_type, content):
+    def create_reply(self, reply_type, tag, content):
         reply = Reply()
         reply.type = reply_type
         # 是否开启 信息添加盲水印
@@ -366,6 +357,7 @@ class Xinuo(Plugin):
             content = Util.watermark_encryption_text(
                 content, self.watermark_encryption_password, self.watermark_encryption_watermark
             )
+        content = f"{tag}\n{content}"
         reply.content = content
         return reply
 
@@ -423,6 +415,7 @@ class Xinuo(Plugin):
             return str(int(time.time()))
 
     def random_user_agent(self):
+        # 随机获取user-agent
         U = UserAgent()
         return U.random
 
@@ -588,9 +581,9 @@ class Xinuo(Plugin):
         return msg
 
     def edit_config_json(self, key, value):
+        # 修改xinuo配置文件信息
         curdir = os.path.dirname(__file__)
         config_path = os.path.join(curdir, "config.json")
-        # 修改配置文件信息
         with open(config_path, 'r') as file:
             data = json.load(file)
         data[key] = value
@@ -613,7 +606,7 @@ class Xinuo(Plugin):
         return str(round(1e10 * random.random()))
 
     def get_aee(self, timestamp, website_key, abc12):
-        #
+        # headers aee
         key = website_key[:8] + timestamp[:3] + timestamp[-5:]
         iv = key
         cipher = Cipher(algorithms.AES(key.encode()), modes.CBC(iv.encode()),
@@ -729,6 +722,7 @@ class Xinuo(Plugin):
         return msg
 
     def run_gpt40_put_prompt(self, input_prompt, tag, agSn):
+        # gnomic 创建任务
         result = None
         tag_ = f"{tag}创建任务"
         try:
@@ -791,6 +785,7 @@ class Xinuo(Plugin):
         return result
 
     def run_gpt40_get_data(self, _id, tag, agSn):
+        # gnomic.cn 获取结果
         result_text = ""
         tag_ = f"{tag}获取结果"
         try:
@@ -1078,6 +1073,7 @@ class Xinuo(Plugin):
         return str(uuid.uuid1()).replace("-", "")
 
     def mongo_con_parse(self):
+        # 连接 mongodb
         confing = self.mongodb_config
         conn = pymongo.MongoClient(confing['host'], confing['port'])
         conn = conn[confing['db']]
@@ -1092,6 +1088,7 @@ class Xinuo(Plugin):
         return now_date
 
     def create_cid(self):
+        # 验证码识别cid
         tag = "验证码识别CID"
         msg = f"{tag}: 服务器睡着了,请稍后再试"
         try:
