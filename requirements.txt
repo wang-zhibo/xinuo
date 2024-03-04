@@ -4,3 +4,4 @@ pyexecjs
 pymongo
 cryptography
 text_blind_watermark
+beartype==0.17.2
