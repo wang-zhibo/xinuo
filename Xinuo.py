@@ -316,8 +316,19 @@ class Xinuo(Plugin):
                 reply = self.create_reply(ReplyType.TEXT, tag, content)
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
-            else:
+            elif content[:9].lower() == "linkaibot":
+                # 当出现linkaibot 关键词 使用 linkai 平台进行回复
                 return
+            else:
+                # 默认使用 破解的GPT-3.5
+                tag = "GPT-3.5"
+                gpt_text = content.strip()
+                logger.info(f"{tag}: {gpt_text}")
+                msg = self.fun_gpt35(gpt_text)
+                content = msg
+                reply = self.create_reply(ReplyType.TEXT, tag, content)
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS
             """
             #
             weather_match = re.match(r'^(?:(.{2,7}?)(?:市|县|区|镇)?|(\d{7,9}))(?:的)?天气$', content)
